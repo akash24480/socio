@@ -93,3 +93,19 @@ export const login = async(req, res) => {
         return res.status(500).json({message: "Internal Server Error"})
     }
 }
+
+export const logout = async(req, res) => {
+
+        res.clearCookie("jwt-socio")
+        res.json({message:"Logged out successfully"})
+
+}
+
+
+export const getCurrentUser = async(req, res) => {
+    try{
+
+    }catch(error){
+        console.error("Error in getCurrentUser", error.message)
+    }
+}
