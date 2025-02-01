@@ -104,8 +104,9 @@ export const logout = async(req, res) => {
 
 export const getCurrentUser = async(req, res) => {
     try{
-
+        res.json(req.user)
     }catch(error){
         console.error("Error in getCurrentUser", error.message)
+        res.status(400).json({message: "Internal Server Error"})
     }
 }
