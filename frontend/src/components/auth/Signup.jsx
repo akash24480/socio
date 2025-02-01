@@ -1,41 +1,36 @@
 import React, { useState } from "react";
-import { User, Mail, Lock, KeyRound } from "lucide-react";
+import { User, Mail, Lock, KeyRound, Loader } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../../lib/axios";
 
 const Signup = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const queryClient = useQueryClient();
 
-  const queryClient = useQueryClient()
-
-  const {mutate:signUpMutation, isLoading} = useMutation({
-    mutationFn : async(data) => {
-      const res = await axiosInstance.post("/auth/signup", data)
-      return res.data
+  const { mutate: signUpMutation, isLoading } = useMutation({
+    mutationFn: async (data) => {
+      const res = await axiosInstance.post("/auth/signup", data);
+      return res.data;
     },
-    onSuccess:()=>{
-      toast.success("Account Created Successfully")
-      queryClient.refetchQueries({queryKey:["authUser"]})
+    onSuccess: () => {
+      toast.success("Account Created Successfully");
+      queryClient.refetchQueries({ queryKey: ["authUser"] });
     },
-    onError:(err) => {
+    onError: (err) => {
       console.log("Error response data:", err.response.data.message);
-      toast.error(err.response.data.message || "Something Went Wrong")
-
-    }
-  })
-
-
+      toast.error(err.response.data.message || "Something Went Wrong");
+    },
+  });
 
   const handleSignUp = (e) => {
     e.preventDefault();
     console.log("Signing up with:", { name, email, username, password });
-    signUpMutation({name, email, username, password})
-    
+    signUpMutation({ name, email, username, password });
   };
 
   return (
@@ -107,7 +102,11 @@ const Signup = () => {
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition"
           >
-            Sign Up
+            {isLoading ? (
+              <Loader className="animate-spin w-6 h-6 text-white mx-auto" />
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </form>
 
