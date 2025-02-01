@@ -1,5 +1,6 @@
 import express from 'express'
 // Use the cors when connecting the frontend
+import cors from 'cors'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import { connectDB } from './db/db.js'
@@ -10,6 +11,13 @@ dotenv.config()
 
 const app = express()
 const port = process.env.PORT || 4000
+
+// defining the cors
+
+app.use(cors({
+  origin:"http://localhost:5173",
+  credentials:true,
+}))
 
 app.use(express.json({ limit: "5mb" })); //Parse JSON request bodies
 app.use(cookieParser())

@@ -3,7 +3,7 @@ import { Bell, Users, User, LogIn, LogOut } from "lucide-react";
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center justify-between p-4 bg-bronze-900 border-b">
+    <nav className="flex items-center justify-between p-4 bg-black border-b">
       <Link to="/" className="text-2xl font-bold text-blue-600">
         Socio
       </Link>
